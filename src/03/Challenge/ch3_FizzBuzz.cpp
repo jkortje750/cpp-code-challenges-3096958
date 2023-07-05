@@ -30,7 +30,7 @@ int main(){
         if (!FizzOrBuzz) {
             std::cout << i;
         }
+        std::cout << std::endl << std::flush;
     }
-    std::cout << std::endl << std::flush;
     return 0;
 }
