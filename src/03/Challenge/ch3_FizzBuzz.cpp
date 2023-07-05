@@ -16,7 +16,21 @@ int main(){
     std::cin >> n;
 
     // Write your code here
-    
+    for (int i = 1; i <= n; i++) {
+        bool FizzOrBuzz = false;
+        if ((i % 3) == 0) {
+            std::cout << "Fizz";
+            FizzOrBuzz = true;
+        }
+        if ((i % 5) == 0) {
+            std::cout << "Buzz";
+            FizzOrBuzz = true;
+        }
+        
+        if (!FizzOrBuzz) {
+            std::cout << i;
+        }
+    }
     std::cout << std::endl << std::flush;
     return 0;
 }
