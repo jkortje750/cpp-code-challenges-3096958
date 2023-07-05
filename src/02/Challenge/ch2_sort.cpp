@@ -8,17 +8,47 @@
 
 #include <iostream>
 
+
 // sort_array()
 // Summary: This function receives an array of integers and sorts it in ascending order.
 // Arguments:
 //           arr: A pointer acting as the array to sort.
 //           n: The size of the array.
 // Returns: A boolean value: True on success, false otherwise.
+void swap(int * arr, int left, int right) {
+    int tmp = arr[left];
+    arr[left] = arr[right];
+    arr[right] = tmp;
+}
+
+int partition(int * arr, int left, int right) {
+    int pivotOffset = left + (right - left) / 2;
+    int pivotValue = arr[pivotOffset];
+    int i = left - 1;
+    int j = right + 1;
+    while (1) {
+        while (arr[++i] < pivotValue);
+        while (arr[--j] > pivotValue);
+        if (i >= j) break;
+        swap(arr, i, j);
+    }
+    return j;
+}
+void qsort(int * arr, int left, int right) {
+    if (left >= right) {
+        return;
+    } else {
+        int pivot = partition(arr, left, right);
+        qsort(arr, left, pivot);
+        qsort(arr, pivot+1, right);
+    }
+}
+
 bool sort_array(int *arr, int n){
 
     // Write your code here
-
-    return false;
+    qsort(arr, 0, n - 1);
+    return true;
 }
 
 // Main function
