@@ -6,17 +6,24 @@
 
 #include <iostream>
 #include <algorithm>
+#include <string>
 
 // is_palindrome()
 // Summary: This function receives a string and returns true if the string is a palindrome, false otherwise.
 // Arguments:
 //           str: The string to analyze.
 // Returns: A boolean value. True for palindromes, false otherwise.
-bool is_palindrome(std::string str){
-
+bool is_palindrome(std::string s) {
     // Write your code here
-
-    return false;
+    std::transform(s.begin(), s.end(), s.begin(),
+        [](unsigned char c){ return std::tolower(c);});
+    std::string s_rev = s;
+    std::reverse(s_rev.begin(), s_rev.end());
+    if (s_rev == s) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 // Main function
