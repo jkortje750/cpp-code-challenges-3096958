@@ -21,15 +21,60 @@
 bool is_bitonic(const std::vector<int> &v){
     
     // Write your code here
-
-    return false;
+    // First check if all elements have same value)
+    int ascendingCount = 0;
+    int decendingCount = 0;
+    bool ascending = false;
+    bool decending = false;
+    bool bitonic = false;
+    bool all_same = true;
+    for (auto x : v) {
+        if (all_same) {
+            all_same = (x == v[0]);
+        }
+    }
+    if (!all_same) {
+        for (int i = 0; i < v.size() - 1; ++i) {
+            if (v[i+1] > v[i]) {
+                if (!ascending) {
+                    ascendingCount++;
+                    ascending = true;
+                    decending = false;
+                }
+            } else if (v[i+1] < v[i]) {
+                if (!decending) {
+                    decendingCount++;
+                    ascending = false;
+                    decending = true;
+                }
+            }
+        }
+        if (((ascendingCount == 1) && (decendingCount == 0)) ||
+            ((decendingCount == 1) && (ascendingCount == 0))) {
+            bitonic = true;
+        } else if ((decendingCount + ascendingCount) > 3) {
+            // Only allow 3 or less slopes
+            bitonic = false;
+        } else if ((decendingCount > 1) || (ascendingCount > 1)) {
+            if (ascending && (v[(v.size() - 1)] <= v[0])) {
+                bitonic = true;
+            }
+            if (decending && (v[(v.size() - 1)] >= v[0])) {
+                bitonic = true;
+            }
+        } 
+    } else {
+        // All were the same value
+        bitonic = true;
+    }
+    return bitonic;
 }
 
 // Main function
 int main(){
     // Uncomment one of these lines and make sure you get the result at the right. 
     
-    std::vector<int> myvec = {1, 2, 5, 4, 3};  // Yes
+    // std::vector<int> myvec = {1, 2, 5, 4, 3};  // Yes
     // std::vector<int> myvec = {1, 1, 1, 1, 1};  // Yes
     // std::vector<int> myvec = {3, 4, 5, 2, 2};  // Yes
     // std::vector<int> myvec = {3, 4, 5, 2, 4};  // No
