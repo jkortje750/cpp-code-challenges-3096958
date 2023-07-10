@@ -15,10 +15,41 @@
 // Arguments:
 //           knight: The knight's location.
 // Returns: An STL vector of strings with the possible locations to move.
+const int numsq = 8;
+struct Delta
+{
+    int xdiff;
+    int ydiff;
+};    
+
+const Delta delta[] = { {-2, 1}, {-1, 2}, {2, 1}, {1, 2},
+                        {-2, -1}, {-1, -2}, {2, -1}, {1, -2} };
+
 std::vector<std::string> knight_moves(std::string knight){
     std::vector<std::string> moves;
-
     // Write your code here
+    char first = knight[0]; 
+    char second = knight[1]; 
+
+    // First convert knight to x an y coordinates
+    if ((first >= 'a') && (first <= 'h') &&
+        (second >= '1') && (second <= ('0' + numsq))) {
+
+        int x = first - 'a';
+        int y = second - '1';
+
+        for (int i = 0; i < numsq; i++) {
+            int x1 = x + delta[i].xdiff;
+            int y1 = y + delta[i].ydiff;
+            if ((x1 >= 0) && (x1 < numsq) && 
+                (y1 >= 0) && (y1 < numsq)) {
+                std::string s1 = "  ";
+                s1[0] = x1 + 'a';
+                s1[1] = y1 + '1';
+                moves.push_back(s1);
+            }
+        }
+    }
 
     return moves;
 }
