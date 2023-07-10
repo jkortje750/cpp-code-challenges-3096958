@@ -9,6 +9,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <sstream>
+#include <iostream>
 
 // is_valid_ip()
 // Summary: This function validates an IP address.
@@ -16,10 +18,27 @@
 //           ip: The string to analyze with a potential ip address.
 // Returns: A boolean value. True for valid ip addresses, false otherwise.
 bool is_valid_ip(std::string ip){
-
     // Write your code here
+    bool result = false;
+    int count = 0;
+    std::string octet;
+    std::stringstream ss(ip);
+    char * end = nullptr;
+    while (std::getline(ss, octet, '.')) {
+        if ((!octet.empty()) && (octet.size() <= 3)) {
+            int value = strtoul(octet.c_str(), &end, 10);
+            if (*end == '\0') { // test first uncoverted character
+                if (value <= 255) {
+                    count++;
+                }
+            } 
+        }
+    }
+    if (count == 4) {
+        result = true;
+    }
 
-    return false;
+    return result;
 }
 
 // Main function
