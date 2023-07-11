@@ -20,13 +20,47 @@
 int is_valid_JSON(std::string filename){
     std::string line;
     bool quotes = false; 
+    bool valid = true;
+    std::stack<int> stk;
 
     std::fstream file (filename, std::ios::in);
     if(file.is_open()){
- 
-        // Write your code here
-
+         // Write your code here
+        std::string line;
+        while (std::getline(file, line)) {
+            for (auto &ch : line) {
+                if (!quotes) {
+                    switch (ch) {
+                        case '\"':
+                            quotes = true;
+                            break;
+                        case '[':
+                        case '{':
+                            stk.push(ch);
+                            break;
+                        case ']':
+                            if (stk.top() == '[') {
+                                stk.pop();
+                            }
+                            break;
+                        case '}':
+                            if (stk.top() == '{') {
+                                stk.pop();
+                            }
+                            break;
+                    }
+                } else {
+                    if (ch == '\"') {
+                        quotes = false;
+                    }
+                }
+            }
+        }
         file.close();
+        if ((!stk.empty()) || (quotes)) {
+            valid = false;
+        }
+        return (valid) ? 1 : 0;
     }
     else
         return -1;
